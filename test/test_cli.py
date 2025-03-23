@@ -1,7 +1,7 @@
 import pytest
 from io import StringIO
 import sys
-from src.main import *
+from src.cli import *
 
 @pytest.fixture
 def capture_stdout(monkeypatch):
@@ -94,9 +94,9 @@ def test_get_commands_invalid_input(monkeypatch, capture_stdout):
     assert captured.count("Invalid commands.") == 3
 
 def test_add_car_flow_valid_input(monkeypatch):
-    monkeypatch.setattr('src.main.get_car_name', lambda : "Jaguar")
-    monkeypatch.setattr('src.main.get_initial_position', lambda *args: (2, 3, 'N'))
-    monkeypatch.setattr('src.main.get_commands', lambda *args: "LRFRRFFL")
+    monkeypatch.setattr('src.cli.get_car_name', lambda : "Jaguar")
+    monkeypatch.setattr('src.cli.get_initial_position', lambda *args: (2, 3, 'N'))
+    monkeypatch.setattr('src.cli.get_commands', lambda *args: "LRFRRFFL")
 
     car_details = add_car_flow(10, 10)
     assert car_details == {
