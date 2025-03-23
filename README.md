@@ -5,6 +5,7 @@
     python -m venv auto_driving
     source auto_driving/bin/activate
     pip install pytest
+    pip install pytest-mock
 ```
 
 ## To run the program 
@@ -16,5 +17,5 @@
 ## To run the test cases
 
 ```bash
-    PYTHONPATH=".:src/" pytest test/
+    python -m pytest test/
 ```

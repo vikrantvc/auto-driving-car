@@ -1,6 +1,5 @@
 from src.utils.input_handlers import add_car_flow, get_field_dimensions, get_main_choice, print_before_simulation, get_termination_choice
 from src.services.simulator import Simulator
-# from src.utils.
 
 def main():
     while True:

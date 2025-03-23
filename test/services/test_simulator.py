@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock
-from src.services.simulator import Simulator, print_before_simulation, print_after_simulation
+from src.services.simulator import Simulator
 from src.models.car import Car
 from src.utils.directions import Direction
 
