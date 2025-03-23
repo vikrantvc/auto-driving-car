@@ -63,8 +63,33 @@ def get_commands(name):
             return commands
         print("Invalid commands. Only L, R, F are allowed.")
 
-def print_car_list(cars: list[Car]):
+def print_before_simulation(cars: list[Car]):
     print("Your current list of cars are:")
     for car in cars:
-        print(f"- {car.name}, ({car.x},{car.y}) {car.direction}, {car.commands}")
+        print(f"- {car.name}, ({car.x},{car.y}) {car.direction.value}, {car.commands}")
 
+
+def print_after_simulation(cars: list[Car]):
+        print("After simulation, the result is:")
+
+        for car in cars:
+            if not car.active:
+                for car1 in cars:
+                    if car.name != car1.name and car.x == car1.x and car.y == car1.y:
+                        print(f"- {car.name}, collides with {car1.name} at ({car.x},{car.y}) at step {car.steps_taken}")
+            else:
+                print(f"- {car.name}, ({car.x},{car.y}) {car.direction.value}")
+
+
+def get_termination_choice():
+    while True:
+        try:
+            choice = int(input("Please choose from the following options:\n[1] Start over\n[2] Exit\n"))
+            if choice not in (1,2):
+                raise ValueError
+            if choice == 1:
+                return False
+            else:
+                return True
+        except Exception as e:
+            print("Invalid choice. Please enter 1 or 2.")

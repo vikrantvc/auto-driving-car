@@ -104,3 +104,52 @@ def test_add_car_flow_valid_input(monkeypatch):
     assert result.y == 3
     assert result.direction == Direction.NORTH
     assert result.commands == "LRFRRFFL"
+
+def test_print_before_simulation(capture_stdout):
+    ferrari = Car("Ferrari", 5, 4, Direction.NORTH, "FFLFR")
+    jaguar = Car("Jaguar", 2, 3, Direction.EAST, "RFFLR")
+    cars = [ferrari, jaguar]
+
+    print_before_simulation(cars)
+
+    captured = capture_stdout.getvalue()
+    assert "Your current list of cars are:" in captured
+    assert "- Ferrari, (5,4) N, FFLFR" in captured
+    assert "- Jaguar, (2,3) E, RFFLR" in captured
+
+
+def test_print_after_simulation(capture_stdout):
+    ferrari = Car("Ferrari", 5, 5, Direction.NORTH, "FFLFR")
+    jaguar = Car("Jaguar", 5, 5, Direction.SOUTH, "FFLR")
+    cars = [ferrari, jaguar]
+    ferrari.active = False
+    ferrari.steps_taken = 1
+    jaguar.active = False
+    jaguar.steps_taken = 1
+
+    print_after_simulation(cars)
+
+    captured = capture_stdout.getvalue()
+    assert "After simulation, the result is:" in captured
+    assert "- Ferrari, collides with Jaguar at (5,5) at step 1" in captured
+    assert "- Jaguar, collides with Ferrari at (5,5) at step 1" in captured
+
+@pytest.mark.parametrize("choice, result",[
+    ("1", False),
+    ("2", True)
+])
+def test_get_termination_choice_valid_input(monkeypatch, choice, result):
+    monkeypatch.setattr('builtins.input', lambda _: choice)
+    actual = get_termination_choice()
+    assert actual == result
+
+def test_get_termination_choice_invalid_input(monkeypatch, capture_stdout):
+    inputs = iter(["invalid", "3", "2"])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    result = get_termination_choice()
+    assert result == True
+
+    captured = capture_stdout.getvalue()
+    assert "Invalid choice. Please enter 1 or 2." in captured
+    assert captured.count("Invalid choice.") == 2

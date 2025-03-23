@@ -7,6 +7,8 @@ class Car():
         self.y = y
         self.direction = direction
         self.commands = commands
+        self.active = True
+        self.steps_taken = 0
         
     def rotate_left(self):
         rotation_map = {
