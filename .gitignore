@@ -173,6 +173,6 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-auto_driving*
+auto_driving/*
 
 .vscode*
