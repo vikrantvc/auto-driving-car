@@ -95,14 +95,24 @@ def test_get_commands_invalid_input(monkeypatch, capture_stdout):
 
 def test_add_car_flow_valid_input(monkeypatch):
     monkeypatch.setattr('src.cli.get_car_name', lambda : "Jaguar")
-    monkeypatch.setattr('src.cli.get_initial_position', lambda *args: (2, 3, 'N'))
+    monkeypatch.setattr('src.cli.get_initial_position', lambda *args: (2, 3, Direction.NORTH))
     monkeypatch.setattr('src.cli.get_commands', lambda *args: "LRFRRFFL")
 
-    car_details = add_car_flow(10, 10)
-    assert car_details == {
-        'name': 'Jaguar',  
-        'x': 2,            
-        'y': 3,            
-        'direction': 'N',  
-        'commands': 'LRFRRFFL' 
-    }
+    result = add_car_flow(10, 10)
+    assert result.name == "Jaguar"
+    assert result.x == 2
+    assert result.y == 3
+    assert result.direction == Direction.NORTH
+    assert result.commands == "LRFRRFFL"
+
+
+def test_run():    
+    car = Car("Ferrari", 5, 4, Direction.NORTH, "FFLFR")
+
+    run(car, 10, 10)
+
+    assert car.name == "Ferrari"
+    assert car.x == 4
+    assert car.y == 6
+    assert car.direction == Direction.NORTH
+    assert car.commands == "FFLFR"
