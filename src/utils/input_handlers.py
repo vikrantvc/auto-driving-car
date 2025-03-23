@@ -30,7 +30,6 @@ def add_car_flow(width, height):
     commands = get_commands(name)
     return Car(name, x, y, Direction(direction), commands)
 
-
 def get_car_name():
     while True:
         name = input("\nPlease enter the name of the car:\n").strip()
@@ -57,7 +56,6 @@ def get_initial_position(name, max_x, max_y):
         except (ValueError, IndexError):
             print("Invalid input. Please use format: x y Direction (N/S/W/E)")
 
-
 def get_commands(name):
     while True:
         commands = input(f"Please enter the commands for car {name}:\n").upper()
@@ -65,17 +63,8 @@ def get_commands(name):
             return commands
         print("Invalid commands. Only L, R, F are allowed.")
 
-def run(car: Car, width: str, height: str):
+def print_car_list(cars: list[Car]):
     print("Your current list of cars are:")
-    print(f"- {car.name}, ({car.x},{car.y}) {car.direction}, {car.commands}")
+    for car in cars:
+        print(f"- {car.name}, ({car.x},{car.y}) {car.direction}, {car.commands}")
 
-    for command in car.commands:
-        if command == 'L':
-            car.rotate_left()
-        elif command == 'R':
-            car.rotate_right()
-        elif command == 'F':
-            car.move_forward(width, height)
-
-    print("After simulation, the result is:")
-    print(f"- {car.name}, ({car.x},{car.y}) {car.direction}")
